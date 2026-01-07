@@ -265,8 +265,7 @@ path = createpathbase()
 def drawpathcolors():
     colormulti = 255/len(path)
     for i in range(len(path)):
-        pygame.draw.rect(canvas,[i*colormulti,i*colormulti,i*colormulti],(path[i][0]*totalsize,path[i][1]*totalsize,cellsize,cellsize))
-        
+        pygame.draw.rect(canvas,[i*colormulti,i*colormulti,i*colormulti],(path[i][0]*totalsize,path[i][1]*totalsize,cellsize,cellsize)) # type: ignore
 def followai(follow=True):
     if follow:
         pathindex = path.index(snakecells[-1])+1
