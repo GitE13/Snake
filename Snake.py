@@ -1,15 +1,5 @@
 import pygame,random,time,math
 
-print(
-    '''Choose your snake:
-    1. Classic Snake
-    2. Daniel Snake
-    3. Dealer Snake
-    4. Sheriff Snake
-    5. Mafia Snake
-    '''
-)
-
 applenumb,duration,copused,bulletmodifier = 1,1,1,1
 
 pygame.init()
@@ -202,13 +192,13 @@ class Mapple(Apple):
         super().oneat()
         speedq.append([10,60*5])
 class Tapple(Apple):
-    def __init__(self, color=[255, 0,50]):
+    def __init__(self, color=[255, 80,80]):
         super().__init__(color)
     def oneat(self):
         super().oneat()
         canvas.fill([0,0,0])
         pygame.display.flip()
-        time.sleep(10)
+        time.sleep(2)
         if len(snakecells) == 2:
             deathanimation()
         else:
@@ -316,30 +306,15 @@ def deathanimation():
     init()
 
 
-def createpathbase():
-    path = [(0,0)]
-    for i in range(grid_ds[1]//2):
-        for j in range(grid_ds[1]-1):
-            path.append((j+1,i*2))
-        for j in range(grid_ds[1]-1,0,-1):
-            path.append((j,i*2+1))
-    for i in range(grid_ds[1]-1,0,-1):
-        path.append((0,i))
-    return(path)
+path = [(0,0)]
+for i in range(grid_ds[1]//2):
+    for j in range(grid_ds[1]-1):
+        path.append((j+1,i*2))
+    for j in range(grid_ds[1]-1,0,-1):
+        path.append((j,i*2+1))
+for i in range(grid_ds[1]-1,0,-1):
+    path.append((0,i))
 
-path = createpathbase()
-
-def drawpathcolors():
-    colormulti = 255/len(path)
-    for i in range(len(path)):
-        pygame.draw.rect(canvas,[i*colormulti,i*colormulti,i*colormulti],(path[i][0]*totalsize,path[i][1]*totalsize,cellsize,cellsize)) # type: ignore
-def followai(follow=True):
-    if follow:
-        pathindex = path.index(snakecells[-1])+1
-        pathtile = path[pathindex%len(path)]
-        global direction
-        direction = (pathtile[0]-snakecells[-1][0],pathtile[1]-snakecells[-1][1])
-    movesnake()
     
 def sign(n):
     if n == 0:
@@ -373,7 +348,6 @@ def updatebullets():
 
 copcells = []
 everysnakecell = []
-createpathbase()
 ticksfromapple = 1
 if __name__ == '__main__':
     drawscreen()
@@ -392,7 +366,7 @@ if __name__ == '__main__':
         if alive:
             if tick % speed == 0:
                 snakesave = snakecells.copy()
-                followai(False)
+                movesnake()
                 everysnakecell.append(snakecells[0])
                 if tick*copused > 20:
                     if copfreeze <= 0:
