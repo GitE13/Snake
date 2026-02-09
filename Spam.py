@@ -3,7 +3,7 @@ import random
 import keyboard
 import tkinter as tk
 import random
-import keyboard  # pip install keyboard
+import keyboard
 
 def spam_tkinter(i):
     root = tk.Tk()
